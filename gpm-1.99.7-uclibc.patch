@@ -1,0 +1,10 @@
+--- gpm-1.99.7/src/daemon/processconn.c.omv~	2015-07-27 23:55:31.790190271 +0200
++++ gpm-1.99.7/src/daemon/processconn.c	2015-07-27 23:56:18.455201346 +0200
+@@ -19,6 +19,7 @@
+  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+  *
+  ********/
++#define _GNU_SOURCE 1 /* for struct ucred */
+ 
+ #include <sys/socket.h>         /* accept */
+ #include <stdlib.h>             /* malloc */

@@ -1,0 +1,89 @@
+#!/bin/bash
+#
+# chkconfig: 2345 15 15
+# description: GPM adds mouse support to text-based Linux applications such \
+#              the Midnight Commander. Is also allows mouse-based console \
+#              cut-and-paste operations, and includes support for pop-up \
+#              menus on the console.
+# processname: gpm
+# pidfile: /var/run/gpm.pid
+# config: /etc/sysconfig/mouse
+#
+### BEGIN INIT INFO
+# Provides: gpm
+# Should-Start: harddrake
+# Default-Start: 2 3 4 5
+# Short-Description: Mouse support for text-based applications
+# Description: GPM adds mouse support to text-based Linux applications such \
+#              the Midnight Commander. Is also allows mouse-based console \
+#              cut-and-paste operations, and includes support for pop-up \
+#              menus on the console.
+### END INIT INFO
+
+# source function library
+. /etc/rc.d/init.d/functions
+
+MOUSECFG=/etc/sysconfig/mouse
+MOUSEDEVICE=/dev/input/mice
+MOUSETYPE=exps2
+if [ -f "$MOUSECFG" ]; then
+	. "$MOUSECFG"
+fi
+
+RETVAL=0
+
+case "$1" in
+  start)
+	echo -n $"Starting console mouse services: "
+
+	if [ -n "$device" ];then
+	    MOUSEDEVICE=/dev/$device
+	fi
+	
+	if [ ! -e $MOUSEDEVICE ];then
+	    echo $"$MOUSEDEVICE don't exist"
+	    exit 0
+	fi
+
+	if [ "$MOUSETYPE" = "none" ]; then
+		echo $"(no mouse is configured)"
+		exit 0
+	fi
+
+	if [ "$MOUSETYPE" = "Microsoft" ]; then
+		MOUSETYPE=ms
+	fi
+
+	if [ -n "$MOUSETYPE" ]; then
+		daemon gpm -m $MOUSEDEVICE -t $MOUSETYPE
+	else
+		daemon gpm -m $MOUSEDEVICE
+	fi
+	RETVAL=$?
+	echo
+	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/gpm
+	;;
+  stop)
+	echo -n $"Shutting down console mouse services: "
+	killproc gpm
+	RETVAL=$?
+
+	echo
+	[ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/gpm
+	;;
+  restart|reload)
+	$0 stop
+	$0 start
+	RETVAL=$?
+	;;
+  status)
+	status gpm
+	RETVAL=$?
+	;;
+  *)
+	echo $"Usage: gpm {start|stop|status|restart|reload}"
+	exit 1
+esac
+
+exit $RETVAL
+

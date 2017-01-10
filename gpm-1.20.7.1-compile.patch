@@ -1,0 +1,68 @@
+diff -up gpm-1.20.7.1/src/daemon/open_console.c.0057 gpm-1.20.7.1/src/daemon/open_console.c
+--- gpm-1.20.7.1/src/daemon/open_console.c.0057	2017-01-10 01:14:36.617083715 +0100
++++ gpm-1.20.7.1/src/daemon/open_console.c	2017-01-10 01:15:37.944718960 +0100
+@@ -19,10 +19,13 @@
+  *
+  ********/
+ 
++#define _BSD_SOURCE 1 /* major() */
++
+ #include <fcntl.h>                  /* open and co.      */
+ #include <sys/stat.h>               /* stat()            */
+ #include <sys/types.h>              /* major()           */
+ #include <sys/ioctl.h>              /* ioctl             */
++#include <sys/types.h>		    /* major() */
+ 
+ #ifdef HAVE_SYS_SYSMACROS_H
+ #include <sys/sysmacros.h>          /* major() w/newer glibc */
+diff -up gpm-1.20.7.1/src/headers/daemon.h.0057 gpm-1.20.7.1/src/headers/daemon.h
+--- gpm-1.20.7.1/src/headers/daemon.h.0057	2017-01-10 01:14:36.618083840 +0100
++++ gpm-1.20.7.1/src/headers/daemon.h	2017-01-10 01:16:13.261718887 +0100
+@@ -151,36 +151,36 @@ extern int              mouse_argc[3];
+ extern char           **mouse_argv[3];    /* and two mice                  */
+ 
+ extern int              opt_aged,
+-                        opt_ptrdrag,
+-                        opt_test,
+-                        opt_double;
++       opt_ptrdrag,
++       opt_test,
++       opt_double;
+ 
+ 
+ extern int              statusX,
+-                        statusY,
+-                        statusB,
+-                        statusC;          /* clicks */
++       statusY,
++       statusB,
++       statusC;          /* clicks */
+ extern int              fifofd;
+ extern int              opt_rawrep;
+ extern int              maxx,
+-                        maxy;
++       maxy;
+ 
+ 
+ extern fd_set           selSet,
+-                        readySet,
+-                        connSet;
++       readySet,
++       connSet;
+ extern int              eventFlag;
+ extern struct winsize   win;
+ 
+ extern Gpm_Cinfo       *cinfo[MAX_VC+1];
+ 
+ extern struct mouse_features  mouse_table[3],
+-                             *which_mouse;      /*the current one*/
++       *which_mouse;      /*the current one*/
+ 
+ extern Gpm_Type         mice[];
+ extern Gpm_Type         *repeated_type;
+ 
+-time_t                  last_selection_time;
++extern time_t                  last_selection_time;
+ 
+ 
+ 

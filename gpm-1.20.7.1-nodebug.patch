@@ -1,0 +1,14 @@
+diff -up gpm-1.20.7.1/src/lib/report-lib.c.0050~ gpm-1.20.7.1/src/lib/report-lib.c
+--- gpm-1.20.7.1/src/lib/report-lib.c.0050~	2017-01-10 01:09:22.021975915 +0100
++++ gpm-1.20.7.1/src/lib/report-lib.c	2017-01-10 01:10:07.980824131 +0100
+@@ -36,7 +36,10 @@ void gpm_report(int line, const char *fi
+    va_list ap;
+ 
+    if (gpm_silent() && stat != GPM_STAT_OOPS) return;
++
++#ifndef DEBUG_VERBOSE
+    if (stat == GPM_STAT_DEBUG) return;
++#endif
+ 
+    va_start(ap,text);
+ 
