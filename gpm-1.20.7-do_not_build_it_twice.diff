@@ -1,5 +1,5 @@
---- gpm-1.99.7/contrib/Makefile.in.0052~	2015-07-27 23:39:37.449963767 +0200
-+++ gpm-1.99.7/contrib/Makefile.in	2015-07-27 23:39:37.457963769 +0200
+--- gpm-1.20.7/contrib/Makefile.in.0052~	2017-05-31 18:38:04.527008172 +0200
++++ gpm-1.20.7/contrib/Makefile.in	2017-05-31 18:38:04.533008029 +0200
 @@ -11,7 +11,7 @@ include $(top_builddir)/Makefile.include
  
  all: $(filter-out %.elc,$(srcdir)/$(ELISP))
@@ -9,9 +9,9 @@
  	if [ -n "$(filter-out %.elc,$(ELISP))" ]; then for i in `echo $(filter-out %.elc,$(ELISP))`; do \
  		$(INSTALL_DATA) $(srcdir)/$$i $(lispdir)/`basename $$i` ;\
  	done; fi
---- gpm-1.99.7/doc/Makefile.in.0052~	2015-07-27 23:39:37.449963767 +0200
-+++ gpm-1.99.7/doc/Makefile.in	2015-07-27 23:39:37.457963769 +0200
-@@ -111,7 +111,7 @@ gpmdoc.ps:	gpm.ps
+--- gpm-1.20.7/doc/Makefile.in.0052~	2017-05-31 18:38:04.527008172 +0200
++++ gpm-1.20.7/doc/Makefile.in	2017-05-31 18:38:04.533008029 +0200
+@@ -113,7 +113,7 @@ gpmdoc.ps:	gpm.ps
  installdirs:	
  	$(MKDIR) $(man1dir) $(man7dir) $(man8dir) $(infodir)	
  
@@ -20,9 +20,9 @@
  	$(INSTALL_DATA) -m 644 mev.1          $(man1dir)
  	$(INSTALL_DATA) -m 644 mouse-test.1   $(man1dir)
  	$(INSTALL_DATA) -m 644 gpm-root.1     $(man1dir)
---- gpm-1.99.7/Makefile.in.0052~	2008-07-24 12:36:35.000000000 +0200
-+++ gpm-1.99.7/Makefile.in	2015-07-27 23:39:37.457963769 +0200
-@@ -76,7 +76,7 @@ Makefile.include: config.status $(srcdir
+--- gpm-1.20.7/Makefile.in.0052~	2017-05-31 18:38:04.526008196 +0200
++++ gpm-1.20.7/Makefile.in	2017-05-31 18:38:04.533008029 +0200
+@@ -59,7 +59,7 @@ Makefile.include: config.status $(srcdir
  
  ### INSTALL
  
@@ -31,14 +31,14 @@
  
  install-strip:
  	$(MAKE) INSTALL_PROGRAM='$(INSTALL_PROGRAM) $(STRIP)' install
---- gpm-1.99.7/src/Makefile.in.0052~	2015-07-27 23:39:37.457963769 +0200
-+++ gpm-1.99.7/src/Makefile.in	2015-07-27 23:40:36.072977680 +0200
-@@ -123,7 +123,7 @@ Makefile.drivers.generated: $(top_srcdir
+--- gpm-1.20.7/src/Makefile.in.0052~	2017-05-31 18:38:04.533008029 +0200
++++ gpm-1.20.7/src/Makefile.in	2017-05-31 18:38:41.667121677 +0200
+@@ -103,7 +103,7 @@ $(DEPFILE) dep: prog/gpm-root.c
  check:	all
  installdirs:
  
 -install:	check 
 +install:
  	$(INSTALL_PROGRAM) gpm $(sbindir)/gpm
- 	$(INSTALL_DATA) -m 644 lib/libgpm.a $(libdir)/libgpm.a
- 	$(INSTALL_DATA) -m 644 $(srcdir)/headers/gpm.h $(includedir)/gpm.h
+ 	if [ -f lib/libgpm.a ] ; then \
+ 	$(INSTALL_DATA) -m 644 lib/libgpm.a $(libdir)/libgpm.a ; \

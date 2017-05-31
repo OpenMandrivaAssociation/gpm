@@ -1,14 +1,12 @@
---- gpm-1.99.7/src/lib/report-lib.c.0050~	2015-07-27 23:36:44.555922732 +0200
-+++ gpm-1.99.7/src/lib/report-lib.c	2015-07-27 23:38:28.231947338 +0200
-@@ -44,8 +44,11 @@ void gpm_report(int line, char *file, in
-    line = 0;                    /* FIXME: gpm 1.99.13 */
-    file = NULL;
+--- gpm-1.20.7/src/lib/report-lib.c.0050~	2017-05-31 18:37:11.187281045 +0200
++++ gpm-1.20.7/src/lib/report-lib.c	2017-05-31 18:37:49.232373192 +0200
+@@ -38,7 +38,9 @@ void gpm_report(int line, char *file, in
+    if ( gpm_silent() && stat != GPM_STAT_OOPS )
+       return;
  
 +#ifndef DEBUG_VERBOSE
-    if(stat == GPM_STAT_DEBUG)
-       return;
+    if (stat == GPM_STAT_DEBUG) return;
 +#endif
-+
-    va_start(ap, text);
  
-    switch (stat) {
+    va_start(ap,text);
+ 

@@ -1,14 +1,14 @@
---- gpm-1.99.7/src/daemon/startup.c.0004~	2015-07-27 22:48:45.518239419 +0200
-+++ gpm-1.99.7/src/daemon/startup.c	2015-07-27 22:49:49.172254527 +0200
-@@ -190,6 +190,11 @@ void startup(int argc, char **argv)
-    check_uniqueness();
-    gpm_report(GPM_PR_INFO, GPM_MESS_STARTED);
+--- gpm-1.20.7/src/daemon/startup.c.0004~	2017-05-31 18:34:29.528136326 +0200
++++ gpm-1.20.7/src/daemon/startup.c	2017-05-31 18:35:45.809317663 +0200
+@@ -137,6 +137,11 @@ void startup(int argc, char **argv)
+ 
+    //return mouse_table[1].fd; /* the second is handled in the main() */
  
 +   // close extra fds
 +   close(0);
 +   close(1);
 +   close(2);
 +
-    // return mouse_table[1].fd; /* the second is handled in the main() */
- 
     /****************** OLD CODE from gpn.c  END ***********************/
+ 
+    init_mice(option.micelist);                  /* reads option.micelist */

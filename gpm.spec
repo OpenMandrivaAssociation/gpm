@@ -7,8 +7,10 @@
 
 Summary:	A mouse server for the Linux console
 Name:		gpm
-Version:	1.99.7
-Release:	5
+# Going back from seemingly dead 1.99.7 branch
+Epoch: 1
+Version:	1.20.7
+Release:	1
 License:	GPLv2+
 Group:		System/Servers
 Url:		http://www.nico.schottelius.org/software/gpm/
@@ -29,8 +31,6 @@ Patch53:	gpm-1.20.5-format_not_a_string_literal_and_no_format_arguments.diff
 # these automake files are utter crap, so just let's rip out the stuff that really doesn't belong
 # there, we don't use and that's causing problem..
 #Patch54:	gpm-1.20.7-fix-out-of-source-build.patch
-Patch56:	gpm-1.99.7-fix-warnings.patch
-Patch57:	gpm-1.99.7-compile.patch
 # from debian
 Patch58:	070_struct_ucred.diff
 
@@ -65,8 +65,8 @@ will use the mouse. You'll also need to install the gpm package.
 %package -n	%{devname}
 Summary:	Libraries and header files for developing mouse driven programs
 Group:		Development/C
-Requires:	%{libname} = %{version}
-Provides:	%{name}-devel = %{version}-%{release}
+Requires:	%{libname} = %{EVRD}
+Provides:	%{name}-devel = %{EVRD}
 
 %description -n	%{devname}
 The %{devname} package contains the libraries and header files needed
@@ -111,7 +111,7 @@ CFLAGS="%{optflags} -fno-strict-aliasing" \
 %install
 %makeinstall_std MKDIR="mkdir -p"
 
-install -m644 example-configurations/gpm-root.conf -D %{buildroot}%{_sysconfdir}/gpm-root.conf
+install -m644 conf/gpm-root.conf -D %{buildroot}%{_sysconfdir}/gpm-root.conf
 install -m755 inputattach -D %{buildroot}%{_sbindir}/inputattach
 
 mkdir -p %{buildroot}/%{_lib}
