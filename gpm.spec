@@ -10,7 +10,7 @@ Name:		gpm
 # Going back from seemingly dead 1.99.7 branch
 Epoch: 1
 Version:	1.20.7
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		System/Servers
 Url:		http://www.nico.schottelius.org/software/gpm/
