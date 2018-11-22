@@ -1,0 +1,15 @@
+diff --git a/src/daemon/open_console.c b/src/daemon/open_console.c
+index 98297c9..0948501 100644
+--- a/src/daemon/open_console.c
++++ b/src/daemon/open_console.c
+@@ -23,6 +23,10 @@
+ #include <sys/stat.h>               /* stat()            */
+ #include <sys/ioctl.h>              /* ioctl             */
+ 
++#ifdef HAVE_SYS_SYSMACROS_H
++#include <sys/sysmacros.h>          /* major() w/newer glibc */
++#endif
++
+ /* Linux specific (to be outsourced in gpm2 */
+ #include <linux/serial.h>           /* for serial console check */
+ #include <asm/ioctls.h>            /* for serial console check */

@@ -32,7 +32,9 @@ Patch53:	gpm-1.20.5-format_not_a_string_literal_and_no_format_arguments.diff
 # there, we don't use and that's causing problem..
 #Patch54:	gpm-1.20.7-fix-out-of-source-build.patch
 # from debian
+Patch57:	gpm-1.20.7-sigemptyset.patch
 Patch58:	070_struct_ucred.diff
+Patch59:	gpm-1.20.7-sysmacros.patch
 
 BuildRequires:	byacc
 BuildRequires:	texinfo
@@ -82,6 +84,12 @@ find -name \*.c |xargs chmod 644
 # The code is nowhere near compiling with -Werror with clang 3.7
 sed -i -e 's,-Werror ,,' Makefile.*
 %apply_patches
+
+# fix ABI values
+#sed -i \
+#	-e '/^abi_lev=/s:=.*:=1:' \
+#	-e '/^abi_age=/s:=.*:=20:' \
+#	configure.ac.footer
 
 cp %{SOURCE2} inputattach.c
 
