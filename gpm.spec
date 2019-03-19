@@ -1,16 +1,16 @@
-%bcond_without	ncurses
+%bcond_without ncurses
 
 # this defines the library version that this package builds.
-%define	major 2
-%define	libname %mklibname %{name} %{major}
-%define	devname %mklibname %{name} -d
+%define major 2
+%define libname %mklibname %{name} %{major}
+%define devname %mklibname %{name} -d
 
 Summary:	A mouse server for the Linux console
 Name:		gpm
 # Going back from seemingly dead 1.99.7 branch
-Epoch: 1
+Epoch:		1
 Version:	1.20.7
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		System/Servers
 Url:		http://www.nico.schottelius.org/software/gpm/
@@ -38,6 +38,7 @@ Patch59:	gpm-1.20.7-sysmacros.patch
 
 BuildRequires:	byacc
 BuildRequires:	texinfo
+BuildRequires:	systemd-macros
 %if %{with ncurses}
 BuildRequires:	pkgconfig(ncursesw)
 %endif
@@ -112,12 +113,12 @@ CFLAGS="%{optflags} -fno-strict-aliasing" \
 	--without-curses
 %endif
 
-%make
+%make_build
 
 %{__cc} %{optflags} %{ldflags} -o inputattach inputattach.c
 
 %install
-%makeinstall_std MKDIR="mkdir -p"
+%make_install MKDIR="mkdir -p"
 
 install -m644 conf/gpm-root.conf -D %{buildroot}%{_sysconfdir}/gpm-root.conf
 install -m755 inputattach -D %{buildroot}%{_sbindir}/inputattach
@@ -131,8 +132,14 @@ install -m644 %{SOURCE3} -D %{buildroot}%{_unitdir}/gpm.service
 
 rm -f %{buildroot}%{uclibc_root}%{_libdir}/*.a
 
+install -d %{buildroot}%{_presetdir}
+cat > %{buildroot}%{_presetdir}/86-gpm.preset << EOF
+enable gpm.service
+EOF
+
 %files
 %config(noreplace) %{_sysconfdir}/gpm-root.conf
+%{_presetdir}/86-gpm.preset
 %{_unitdir}/gpm.service
 %{_bindir}/display-buttons
 %{_bindir}/display-coords
