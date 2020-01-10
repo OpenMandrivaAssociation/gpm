@@ -84,7 +84,7 @@ will use the mouse. You'll also need to install the gpm package.
 find -name \*.c |xargs chmod 644
 # The code is nowhere near compiling with -Werror with clang 3.7
 sed -i -e 's,-Werror ,,' Makefile.*
-%apply_patches
+%autopatch -p1
 
 # fix ABI values
 #sed -i \
