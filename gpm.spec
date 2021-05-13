@@ -10,7 +10,7 @@ Name:		gpm
 # Going back from seemingly dead 1.99.7 branch
 Epoch:		1
 Version:	1.20.7
-Release:	3
+Release:	4
 License:	GPLv2+
 Group:		System/Servers
 Url:		http://www.nico.schottelius.org/software/gpm/
@@ -38,12 +38,11 @@ Patch59:	gpm-1.20.7-sysmacros.patch
 
 BuildRequires:	byacc
 BuildRequires:	texinfo
-BuildRequires:	systemd-macros
+BuildRequires:	systemd-rpm-macros
 %if %{with ncurses}
 BuildRequires:	pkgconfig(ncursesw)
 %endif
-Requires(post,preun):	chkconfig
-Requires(post,preun):	rpm-helper
+%systemd_requires
 
 %description
 Gpm provides mouse support to text-based Linux applications like the
@@ -55,23 +54,23 @@ the click of a mouse button.
 Gpm should be installed if you intend to use a mouse with your
 OpenMandriva Lx system.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Libraries and header files for developing mouse driven programs
 Group:		System/Libraries
 
-%description -n	%{libname}
+%description -n %{libname}
 Library used by the gpm program.
 
 Install %{libname}dev if you need to develop text-mode programs which 
 will use the mouse. You'll also need to install the gpm package.
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	Libraries and header files for developing mouse driven programs
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
 Provides:	%{name}-devel = %{EVRD}
 
-%description -n	%{devname}
+%description -n %{devname}
 The %{devname} package contains the libraries and header files needed
 for development of mouse driven programs.  This package allows you to
 develop text-mode programs which use the mouse.
@@ -136,6 +135,15 @@ install -d %{buildroot}%{_presetdir}
 cat > %{buildroot}%{_presetdir}/86-gpm.preset << EOF
 enable gpm.service
 EOF
+
+%post
+%systemd_post gpm.service
+
+%preun
+%systemd_preun gpm.service
+
+%postun
+%systemd_postun_with_restart gpm.service
 
 %files
 %config(noreplace) %{_sysconfdir}/gpm-root.conf
