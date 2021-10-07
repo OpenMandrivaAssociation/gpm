@@ -1,3 +1,6 @@
+# Workaround to build with GCC 10
+%global optflags %{optflags} -fcommon
+
 %bcond_without ncurses
 
 # this defines the library version that this package builds.
