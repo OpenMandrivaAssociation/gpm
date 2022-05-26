@@ -13,7 +13,7 @@ Name:		gpm
 # Going back from seemingly dead 1.99.7 branch
 Epoch:		1
 Version:	1.20.7
-Release:	4
+Release:	5
 License:	GPLv2+
 Group:		System/Servers
 Url:		http://www.nico.schottelius.org/software/gpm/
@@ -117,22 +117,17 @@ CFLAGS="%{optflags} -fno-strict-aliasing" \
 
 %make_build
 
-%{__cc} %{optflags} %{ldflags} -o inputattach inputattach.c
+%{__cc} %{optflags} %{build_ldflags} -o inputattach inputattach.c
 
 %install
 %make_install MKDIR="mkdir -p"
 
 install -m644 conf/gpm-root.conf -D %{buildroot}%{_sysconfdir}/gpm-root.conf
 install -m755 inputattach -D %{buildroot}%{_sbindir}/inputattach
-
-mkdir -p %{buildroot}/%{_lib}
-mv %{buildroot}%{_libdir}/libgpm.so.%{major}* %{buildroot}/%{_lib}
-ln -srf %{buildroot}/%{_lib}/libgpm.so.%{major}.*.* %{buildroot}%{_libdir}/libgpm.so
+ln -s %{_libdir}/libgpm.so.%{major} %{buildroot}%{_libdir}/libgpm.so
 
 # systemd
 install -m644 %{SOURCE3} -D %{buildroot}%{_unitdir}/gpm.service
-
-rm -f %{buildroot}%{uclibc_root}%{_libdir}/*.a
 
 install -d %{buildroot}%{_presetdir}
 cat > %{buildroot}%{_presetdir}/86-gpm.preset << EOF
@@ -162,15 +157,15 @@ EOF
 %{_bindir}/get-versions
 %{_sbindir}/gpm
 %{_sbindir}/inputattach
-%{_infodir}/gpm.info*
-%{_mandir}/man1/mev.1*
-%{_mandir}/man1/mouse-test.1*
-%{_mandir}/man1/gpm-root.1*
-%{_mandir}/man7/gpm-types.7*
-%{_mandir}/man8/gpm.8*
+%doc %{_infodir}/gpm.info*
+%doc %{_mandir}/man1/mev.1*
+%doc %{_mandir}/man1/mouse-test.1*
+%doc %{_mandir}/man1/gpm-root.1*
+%doc %{_mandir}/man7/gpm-types.7*
+%doc %{_mandir}/man8/gpm.8*
 
 %files -n %{libname}
-/%{_lib}/libgpm.so.%{major}*
+%{_libdir}/libgpm.so.%{major}*
 
 %files -n %{devname}
 %{_libdir}/libgpm.a
