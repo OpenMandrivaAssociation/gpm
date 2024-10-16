@@ -16,7 +16,7 @@ Version:	1.20.7
 Release:	8
 License:	GPLv2+
 Group:		System/Servers
-Url:		http://www.nico.schottelius.org/software/gpm/
+Url:		https://www.nico.schottelius.org/software/gpm/
 Source0:	http://www.nico.schottelius.org/software/gpm/archives/%{name}-%{version}.tar.lzma
 Source2:	inputattach.c
 Source3:	gpm.service
