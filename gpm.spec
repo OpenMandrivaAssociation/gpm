@@ -39,6 +39,11 @@ Patch57:	gpm-1.20.7-sigemptyset.patch
 Patch58:	070_struct_ucred.diff
 Patch59:	gpm-1.20.7-sysmacros.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	byacc
 BuildRequires:	texinfo
 BuildRequires:	systemd-rpm-macros
